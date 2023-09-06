@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<html>
+<head>
+    <meta charset="utf-8">
+    <link th:href="@{/css/bootstrap.min.css}"
+          href="css/bootstrap.min.css" rel="stylesheet">
+    <script>
+
+        // 댓글창의 "등록" 버튼 클릭 시
+        $("#submitComment").on("click", function () {
+            var commentText = $("#commentText").val();
+            var boardSeq = '123';
+
+            // Ajax 요청으로 댓글 작성 API 호출
+            $.ajax({
+                type: "POST",
+                url: "/api/reply", // 댓글 작성 API
+                data: {
+                    boardSeq: boardSeq,
+                    comment: commentText
+                },
+                success: function (newComment) {
+                    // 댓글 작성 성공 시, 페이지 다시 로딩
+                    window.location.reload();
+                },
+                error: function () {
+                    alert("댓글 작성에 실패했습니다.");
+                },
+            });
+        });
+
+    </script>
+    <style>
+        .board-name-container {
+            margin-bottom: 45px;
+        }
+
+        .reply-write-box {
+            margin-bottom: 10px;
+        }
+
+        .reply-content-box {
+            margin: 5px;
+        }
+
+        .reply-content {
+            margin: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <div th:replace="~{fragment/header}"></div>
+
+    <div class="row">
+
+        <div class="col-md-3">
+            <div th:replace="~{fragment/sidebar}"></div>
+        </div>
+
+        <div class="col-md-9" style="margin-top: 30px;">
+
+            <div class="board-name-container">
+                <h1>자유 게시판</h1>
+            </div>
+
+            <form action th:object="${freeBoardDTO}" th:action method="post" enctype="multipart/form-data">
+                <table class="table">
+                    <tbody>
+                    <div th:if="${#fields.hasGlobalErrors()}">
+                        <p class="field-error" th:each="err : ${#fields.globalErrors()}"
+                           th:text="${err}">글로벌 오류 메시지</p>
+                    </div>
+                    <tr>
+                        <th class="bg-gray">분류</th>
+                        <td>
+                            <select name="categoryName" th:field="*{categoryId}" class="form-control">
+                                <option value="hobby">취미</option>
+                                <option value="humor">유머</option>
+                                <option value="touching">감동</option>
+                            </select>
+                            <div class="field-error" th:errors="*{categoryId}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="bg-gray">제목</th>
+                        <td><input type="text" name="subject" th:field="*{subject}" class="form-control">
+                            <div class="field-error" th:errors="*{subject}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="bg-gray">내용</th>
+                        <td><textarea name="content" th:field="*{content}" class="form-control"></textarea>
+                            <div class="field-error" th:errors="*{content}"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="bg-gray">첨부파일</th>
+                        <td>
+                            <div class="file-container" th:if="${fileList}">
+                                <div class="file-box row" th:each="file : ${fileList}">
+                                    <span class="col-md-1">📁</span>
+                                    ︎ <div class="attachment-box col-md-9" th:text="${file.originName}"></div>
+                                    <button type="button" class="delete-btn btn btn-outline-dark col-md-1" th:text="삭제"></button>
+                                </div>
+                            </div>
+                            <div id="attachFileDiv">
+                                <input type="file" name="addFiles">
+                                <input type="button" value="추가" onclick="">
+                            </div>
+                            <div class="field-error" th:errors="*{addFiles}"/>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <div class="reply-container" th:if="${replyList}">
+                    <div class="reply-write-box row">
+                        <input type="text" class="col-md-10" placeholder="댓글을 입력해 주세요">
+                        <div class="col-md-2">
+                            <button type="button" class="btn btn-light" id="submitComment">등록</button>
+                        </div>
+                    </div>
+                    <div class="reply-content-box row" th:each="reply : ${replyList}">
+                        <div class="col-md-10">
+                            <div class="reply-label">
+                                <span th:if="${reply.memberId}" th:text="${reply.memberId}"></span>
+                                <span th:unless="${reply.adminId}" th:text="${reply.adminId}"></span>
+                                <span th:text="${reply.date}"></span>
+                            </div>
+                            <div class="reply-content">
+                                <span th:text="${reply.content}"></span>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <button type="button" class="btn btn-outline-dark">삭제</button>
+                        </div>
+                    </div>
+                </div>
+
+                <input type="submit"
+                       class="btn btn-primary pull-right"
+                       th:onclick="|location.href='@{/admin/free/{seq}(seq=${freeBoardDTO.seq})}'|"
+                       value="등록/수정">
+                <button
+                        type="button"
+                        class="btn btn-primary pull-right"
+                        th:onclick="|location.href='@{/admin/frees}'|">목록
+                </button>
+                <button type="button"
+                        th:if="${freeBoardDTO.seq != 0}"
+                        th:onclick="|location.href='@{/admin/free/delete/{seq}(seq=${freeBoardDTO.seq})}'|"
+                        class="btn btn-primary pull-right">삭제
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
