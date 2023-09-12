@@ -6,55 +6,47 @@
         }
 
         .sidebar {
-            width: 250px;
+            width: 200px;
             background-color: #ffffff;
             color: white;
-            padding: 20px;
             position: sticky;
         }
+
+        li {
+            margin: 10px 0;
+        }
+
 
     </style>
 </head>
 <body>
 <div>
-    <div class="sidebar">
-        <ul class="nav nav-pills nav-flush flex-column mb-auto text-center">
-            <li>
-                <a href="/admin/notices" class="nav-link py-3 border-bottom rounded-0" title="공지사항 관리" data-bs-toggle="tooltip"
-                   data-bs-placement="right">
-                    공지사항 관리
-                    <svg class="bi pe-none" width="24" height="24" role="img" aria-label="공지사항 관리">
-                        <use xlink:href="#speedometer2"/>
-                    </svg>
-                </a>
-            </li>
-            <li>
-                <a href="/admin/frees" class="nav-link py-3 border-bottom rounded-0" title="Dashboard" data-bs-toggle="tooltip"
-                   data-bs-placement="right">
-                    자유 게시판 관리
-                    <svg class="bi pe-none" width="24" height="24" role="img" aria-label="Dashboard">
-                        <use xlink:href="#speedometer2"/>
-                    </svg>
-                </a>
-            </li>
-            <li>
-                <a href="/admin/galleries" class="nav-link py-3 border-bottom rounded-0" title="Orders" data-bs-toggle="tooltip"
-                   data-bs-placement="right">
-                    갤러리 게시판 관리
-                    <svg class="bi pe-none" width="24" height="24" role="img" aria-label="Orders">
-                        <use xlink:href="#table"/>
-                    </svg>
-                </a>
-            </li>
-            <li>
-                <a href="/admin/qnas" class="nav-link py-3 border-bottom rounded-0" title="Products" data-bs-toggle="tooltip"
-                   data-bs-placement="right">
-                    문의 게시판 관리
-                    <svg class="bi pe-none" width="24" height="24" role="img" aria-label="Products"></svg>
-                </a>
-            </li>
-        </ul>
-    </div>
+    <nav id="sidebar" class="col-md-3 col-lg-2 d-md-block sidebar">
+        <div class="position-sticky">
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a class="nav-link active" href="/admin/notices">
+                        공지사항 관리
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/admin/frees/">
+                        자유 게시판 관리
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/admin/galleries">
+                        갤러리 게시판 관리
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/admin/qnas">
+                        문의 게시판 관리
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
 </div>
 </body>
 
