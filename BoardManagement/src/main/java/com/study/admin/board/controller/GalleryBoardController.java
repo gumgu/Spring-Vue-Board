@@ -48,8 +48,9 @@ public class GalleryBoardController {
                                Model model) {
         log.info("GalleryController boardSearch = {}", boardSearch);
 
-        // 게시판의 종류를 지정합니다.
+        // 게시판의 종류와 가져올 게시글 수를 지정합니다.
         boardSearch.setType("G");
+        boardSearch.setPageSize(3);
 
         // 검색 조건에 맞는 게시글을 조회합니다.
         List<GalleryBoardDTO> galleryList = galleryBoardService.findBoardList(boardSearch);

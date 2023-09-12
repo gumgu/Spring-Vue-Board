@@ -48,9 +48,9 @@ public class BoardSearchCondition {
     private int currentPage = 1;
 
     /**
-     * 한 페이지의 게시글 수 : (default) 30
+     * 한 페이지의 게시글 수 : (default) 10
      */
-    private int pageSize = 30;
+    private int pageSize = 10;
 
     /**
      * 조회한 게시글 수
@@ -88,7 +88,7 @@ public class BoardSearchCondition {
      * - (default) 1년 전 금일
      */
     public void setDefaultFromDate() {
-        this.fromDate = LocalDateTime.now().minusMonths(1).format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+        this.fromDate = LocalDateTime.now().minusYears(1).format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
     }
 
     /**
