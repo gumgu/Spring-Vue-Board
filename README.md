@@ -4,8 +4,7 @@ BoardSimple은 간단한 CRUD 기능을 갖춘 게시판 포털 서비스입니�
 ## 🏠 메인 화면
 | 사용자 게시판 | 관리자 게시판 |
 |---------|---------|
-|![image](https://github.com/gumgu/Spring-Vue-Board/assets/87007010/28495501-7239-41b4-b31b-b053f1fd22de)|![image](https://github.com/gumgu/Spring-Vue-Board/assets/87007010/9638f0fa-70b5-4978-a049-08c9739b8b32)|
-
+|![image](https://github.com/gumgu/Spring-Vue-Board/assets/87007010/28495501-7239-41b4-b31b-b053f1fd22de)|![image](https://github.com/gumgu/Spring-Vue-Board/assets/87007010/0b6ee6c2-f597-4a68-864b-e9555450b430)|
 
 ## 📑 프로젝트 소개
 ### 사용자 게시판
@@ -25,8 +24,6 @@ Springboot와 thymeleaf를 이용하여 MVC2 패턴 기반 MPA 방식으로 제�
 - **댓글**: 기본 CRUD.
 
 ## 💡 저는 이 프로젝트를 통해서...
-- Vue.js를 학습했습니다. 
-- MPA, SPA를 동시에 구현하며 각자의 장단점에 대해 학습했습니다.
 - 
 
 ## 🌐 플랫폼
