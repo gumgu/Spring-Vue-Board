@@ -16,7 +16,7 @@ Springboot와 Vue.js를 이용하여 RestfulAPI 기반 SPA 방식으로 제작�
 - **댓글**: 기본 CRUD.
 
 ### 관리자 게시판
-Springboot와 thymeleaf를 이용하여 MVC2 패턴 기반 MPA 방식으로 제작되었습니다.
+Springboot와 thymeleaf를 이용하여 MPA 방식으로 제작되었습니다.
 - **회원(관리자)**: session과 Spring Interceptor를 통한 회원가입 및 로그인.
 - **게시판**: 모든 게시글 수정 및 삭제, Validation(검증), 검색 및 페이징, 조회수.
 - **문의글**: 모든 게시글 수정 조회 및 삭제, 자신의 문의글만 조회.
@@ -24,7 +24,10 @@ Springboot와 thymeleaf를 이용하여 MVC2 패턴 기반 MPA 방식으로 제�
 - **댓글**: 기본 CRUD.
 
 ## 💡 저는 이 프로젝트를 통해서...
-- 
+- 사용자 사이트(MPA)와 관리자 사이트(SPA)를 함께 구현하여 CSR, SSR의 전반적인 흐름을 직접 기획하고 구현해보았습니다.
+- Vue.js, MyBatis, Spring 새로 학습하고 주요 기능을 직접 적용해보았습니다.
+- Restful API를 학습하고 이를 준수하여 설계했습니다.
+- 다양한 인증 & 인가 방법을 학습하고 적용해보았습니다. (cookie, session, jwt)
 
 ## 🌐 플랫폼
 Web
@@ -46,3 +49,6 @@ Web
 
 * * *
 ## 🌟 주요 기능
+### [인증 & 인가]()
+
+### [
