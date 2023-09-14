@@ -53,4 +53,4 @@ Web
 
 ### [게시글 CRUD]()
 
-### [에러 화면]()
+### [에러 화면](https://github.com/gumgu/Spring-Vue-Board/wiki/%EC%A3%BC%EC%9A%94-%EA%B8%B0%EB%8A%A5:-ErrorPage-%EA%B5%AC%ED%98%84)
