@@ -1,4 +1,4 @@
-# 🚀 Spring-Vue-Board: BoardSimple
+# 🚀 Spring-Vue-Board: BoardSimple (개인 프로젝트)
 BoardSimple은 간단한 CRUD 기능을 갖춘 게시판 포털 서비스입니다. 사용자(SPA)와 관리자(MPA) 2가지 버전으로 제작되었습니다.
 
 ## 🏠 메인 화면
