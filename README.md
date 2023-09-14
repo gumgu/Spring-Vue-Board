@@ -51,6 +51,6 @@ Web
 ## 🌟 주요 기능
 ### [인증 & 인가](https://github.com/gumgu/Spring-Vue-Board/wiki/%EC%A3%BC%EC%9A%94-%EA%B8%B0%EB%8A%A5:-%EC%9D%B8%EC%A6%9D-&-%EC%9D%B8%EA%B0%80)
 
-### [게시글 CRUD]()
+### [게시글 CRUD](https://github.com/gumgu/Spring-Vue-Board/wiki/%EC%A3%BC%EC%9A%94-%EA%B8%B0%EB%8A%A5:-%EA%B2%8C%EC%8B%9C%EA%B8%80-CRUD)
 
 ### [에러 화면](https://github.com/gumgu/Spring-Vue-Board/wiki/%EC%A3%BC%EC%9A%94-%EA%B8%B0%EB%8A%A5:-ErrorPage-%EA%B5%AC%ED%98%84)
