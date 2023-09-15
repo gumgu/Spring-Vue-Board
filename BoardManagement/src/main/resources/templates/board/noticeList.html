@@ -82,8 +82,7 @@
 
         td.subject {
             text-align: left;
-            min-width: 180px;
-            max-width: 180px;
+            width: 380px;
         }
 
         th {
@@ -198,7 +197,7 @@
                             <a th:text="${notice.subject}"/>
                         </td>
                         <td th:text="${notice.readCount}"></td>
-                        <td th:text="${notice.date}"></td>
+                        <td th:text="${#temporals.format(notice.date, 'yyyy-MM-dd HH:mm')}"></td>
                         <td th:text="${notice.adminId}"></td>
                     </tr>
                     <tr th:each="notice : ${noticeList}"
@@ -209,7 +208,7 @@
                             <a th:text="${notice.subject}"/>
                         </td>
                         <td th:text="${notice.readCount}"></td>
-                        <td th:text="${notice.date}"></td>
+                        <td th:text="${#temporals.format(notice.date, 'yyyy-MM-dd HH:mm')}"></td>
                         <td th:text="${notice.adminId}"></td>
                     </tr>
                     </tbody>
