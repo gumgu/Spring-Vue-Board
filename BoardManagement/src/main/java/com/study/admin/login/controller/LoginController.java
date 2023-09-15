@@ -47,7 +47,7 @@ public class LoginController {
      */
     @PostMapping("/login")
     public String login(@Valid @ModelAttribute LoginDTO loginDTO,
-                        @RequestParam(defaultValue = "/") String redirectURL,
+                        @RequestParam(defaultValue = "/admin/frees") String redirectURL,
                         BindingResult bindingResult,
                         HttpServletRequest request) {
 
@@ -77,7 +77,7 @@ public class LoginController {
      * @param request
      * @return
      */
-    @PostMapping("/logout")
+    @GetMapping("/logout")
     public String logout(HttpServletRequest request) {
 
         HttpSession session = request.getSession(false);
@@ -86,7 +86,7 @@ public class LoginController {
             session.invalidate(); // 세션 삭제
         }
 
-        return "redirect:/";
+        return "redirect:/admin/login";
     }
 
 }
