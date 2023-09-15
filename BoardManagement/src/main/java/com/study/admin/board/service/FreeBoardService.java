@@ -5,6 +5,7 @@ import com.study.admin.dto.BoardSearchCondition;
 import com.study.admin.dto.FileDTO;
 import com.study.admin.dto.FreeBoardDTO;
 import com.study.admin.file.repository.FileRepository;
+import com.study.admin.reply.repository.ReplyRepository;
 import com.study.admin.util.FileUtil;
 import com.study.admin.util.ParamUtil;
 import lombok.RequiredArgsConstructor;
@@ -32,6 +33,11 @@ public class FreeBoardService {
      * 파일(File) 리포지터리
      */
     private final FileRepository fileRepository;
+
+    /**
+     * 댓글(Reply) 리포지터리
+     */
+    private final ReplyRepository replyRepository;
 
     /**
      * 검색 조건에 맞는 자유 게시글 리스트를 조회합니다.
@@ -126,6 +132,8 @@ public class FreeBoardService {
      * @param seq 삭제할 seq
      */
     public void deleteBoard(int seq) {
+        replyRepository.deleteByBoardSeq(seq);
+        fileRepository.deleteFileByBoardSeq(seq);
         freeBoardRepository.deleteBoard(seq);
     }
 
