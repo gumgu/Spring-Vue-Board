@@ -39,4 +39,23 @@ public class FreeBoardDTO extends Board {
      */
     private Integer replyCount;
 
+    public void setFiles(List<FileDTO> files) {
+        this.files = files;
+    }
+
+    public void setDeleteFileNames(List<String> deleteFileNames) {
+        this.deleteFileNames = deleteFileNames;
+    }
+
+    public void setHasFile(boolean hasFile) {
+        this.hasFile = hasFile;
+    }
+
+    public void setAddFiles(List<MultipartFile> addFiles) {
+        this.addFiles = addFiles;
+    }
+
+    public void setReplyCount(Integer replyCount) {
+        this.replyCount = replyCount;
+    }
 }

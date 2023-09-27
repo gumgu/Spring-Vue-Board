@@ -3,6 +3,7 @@ package com.study.admin.entity;
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -18,7 +19,7 @@ public class Board {
     /**
      * 게시글 ID: pk, auto_increase
      */
-    @NotNull
+    @NotBlank(groups = UpdateCheck.class)
     private int seq;
 
     /**
@@ -39,20 +40,21 @@ public class Board {
     /**
      * 카테고리 아이디
      */
+    @NotBlank(groups = {SaveCheck.class, UpdateCheck.class})
     private String categoryId;
 
     /**
      * 게시글 제목
      */
-    @NotEmpty
-    @Size(min = 4, max = 100, message = "제목은 4글자 ~ 100 글자로 입력해주세요")
+    @NotBlank(groups = {SaveCheck.class, UpdateCheck.class})
+    @Size(min = 4, max = 100, groups = {SaveCheck.class, UpdateCheck.class})
     private String subject;
 
     /**
      * 게시글 내용
      */
-    @NotEmpty
-    @Size(min = 4, max = 2000, message = "내용은 4글자 ~ 2000 글자로 입력해주세요")
+    @NotBlank(groups = {SaveCheck.class, UpdateCheck.class})
+    @Size(min = 4, max = 2000, groups = {SaveCheck.class, UpdateCheck.class})
     private String content;
 
     /**

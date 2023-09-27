@@ -1,22 +1,28 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<html>
 <head>
     <meta charset="utf-8">
     <link th:href="@{/css/bootstrap.min.css}"
           href="css/bootstrap.min.css" rel="stylesheet">
     <style>
+        .container-fluid {
+            max-width: 1000px;
+        }
 
         /*************** 베너 디자인 *************/
         .board-name-container {
-            margin-bottom: 45px;
+            margin: 24px;
         }
 
+        /************ 작성 폼 내부 디자인 ***********/
+        textarea {
+            height: 200px;
+        }
     </style>
 </head>
 <body>
 
-<div class="container">
+<div class="container-fluid">
 
     <div th:replace="~{fragment/header}"></div>
 
@@ -26,10 +32,10 @@
             <div th:replace="~{fragment/sidebar}"></div>
         </div>
 
-        <div class="col-md-9" style="margin-top: 30px;">
+        <div class="col-md-9">
 
             <div class="board-name-container">
-                <h1>공지사항 관리</h1>
+                <h3>공지사항 게시판 관리</h3>
             </div>
 
             <form action th:object="${noticeBoardDTO}" th:action method="post">

@@ -38,7 +38,7 @@ public final class ParamUtil {
      * @return boolean 확인 값
      */
     public static boolean isNull(List<MultipartFile> param) {
-        return param != null && param.size() > 0;
+        return param == null && param.size() > 0;
     }
 
 

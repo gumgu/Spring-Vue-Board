@@ -2,6 +2,8 @@ package com.study.admin.board.controller;
 
 import com.study.admin.board.service.FreeBoardService;
 import com.study.admin.dto.*;
+import com.study.admin.entity.SaveCheck;
+import com.study.admin.entity.UpdateCheck;
 import com.study.admin.enums.SessionConst;
 import com.study.admin.file.service.FileService;
 import com.study.admin.reply.service.ReplyService;
@@ -112,11 +114,11 @@ public class FreeBoardController {
      * @return
      */
     @PostMapping("/free")
-    public String add(@Validated @ModelAttribute FreeBoardDTO freeBoardDTO,
-                      BindingResult bindingResult,
-                      HttpServletRequest request) throws IOException {
+    public String add(@Validated(SaveCheck.class) @ModelAttribute("freeBoardDTO") FreeBoardDTO freeBoardDTO,
+                      BindingResult bindingResult, HttpServletRequest request) throws IOException {
 
         log.info("저장할 freeBoardDTO={}", freeBoardDTO);
+        log.info("저장할 board={}", freeBoardDTO.toBoardString());
 
         // binding 실패 시, 다시 작성 폼을 제공합니다.
         if (bindingResult.hasErrors()) {
@@ -127,6 +129,11 @@ public class FreeBoardController {
         // 세션의 관리자 id를 DTO에 담습니다.
         HttpSession session = request.getSession();
         AdminDTO adminDTO = (AdminDTO) session.getAttribute(SessionConst.LOGIN_ADMIN);
+
+        if (adminDTO == null) {
+            String redirectURL = "/admin/free";
+            return "redirect:/admin/login?redirectURL=" + redirectURL;
+        }
 
         freeBoardDTO.setAdminId(adminDTO.getId());
 
@@ -143,14 +150,25 @@ public class FreeBoardController {
      * @return
      */
     @PostMapping("/free/{seq}")
-    public String modify(@ModelAttribute FreeBoardDTO freeBoardDTO,
-                         HttpServletRequest request) {
+    public String modify(@Validated(UpdateCheck.class) @ModelAttribute FreeBoardDTO freeBoardDTO,
+                         BindingResult bindingResult, HttpServletRequest request) {
 
         log.info("수정할 free = {}", freeBoardDTO);
+
+        // binding 실패 시, 다시 작성 폼을 제공합니다.
+        if (bindingResult.hasErrors()) {
+            log.debug("error={}", bindingResult);
+            return "board/freeForm";
+        }
 
         // 세션의 관리자 id를 DTO에 담습니다.
         HttpSession session = request.getSession();
         AdminDTO adminDTO = (AdminDTO) session.getAttribute(SessionConst.LOGIN_ADMIN);
+
+        if (adminDTO == null) {
+            String redirectURL = "/admin/frees";
+            return "redirect:/admin/login?redirectURL=" + redirectURL;
+        }
 
         log.info("adminDTO = {}", adminDTO);
         freeBoardDTO.setAdminId(adminDTO.getId());

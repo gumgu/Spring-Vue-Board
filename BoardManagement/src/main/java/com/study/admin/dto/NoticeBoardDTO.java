@@ -19,7 +19,6 @@ public class NoticeBoardDTO extends Board {
         return "seq:" + getSeq() +
                 ", subject:" + getSubject() +
                 ", content:" + getContent() +
-                ", categoryName:" + getCategoryName() +
                 ", alert: " + isAlert() +
                 ", adminId:" + getAdminId();
     }

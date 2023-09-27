@@ -1,57 +1,56 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<html>
 <head>
     <meta charset="utf-8">
     <link th:href="@{/css/bootstrap.min.css}"
           href="css/bootstrap.min.css" rel="stylesheet">
     <script>
-
-        // 댓글창의 "등록" 버튼 클릭 시
-        $("#submitComment").on("click", function () {
-            var commentText = $("#commentText").val();
-            var boardSeq = '123';
-
-            // Ajax 요청으로 댓글 작성 API 호출
-            $.ajax({
-                type: "POST",
-                url: "/api/reply", // 댓글 작성 API
-                data: {
-                    boardSeq: boardSeq,
-                    comment: commentText
-                },
-                success: function (newComment) {
-                    // 댓글 작성 성공 시, 페이지 다시 로딩
-                    window.location.reload();
-                },
-                error: function () {
-                    alert("댓글 작성에 실패했습니다.");
-                },
-            });
-        });
-
+        const add_file_box = () => {
+            const box = document.getElementById("attachFileDiv");
+            const newDiv = document.createElement('div');
+            newDiv.innerHTML = "<input type='file' name='addFiles'>\n<button type='button' class='btn btn-outline-dark' onclick='delete_file_box(this)'>X</button>"
+            box.appendChild(newDiv);
+        }
+        const delete_file_box = (obj) => {
+            document.getElementById('attachFileDiv').removeChild(obj.parentNode);
+        }
     </script>
     <style>
+        .container-fluid {
+            max-width: 1000px;
+        }
+
+        /*************** 베너 디자인 *************/
         .board-name-container {
-            margin-bottom: 45px;
+            margin: 24px;
         }
 
-        .reply-write-box {
-            margin-bottom: 10px;
+        /************ 작성 폼 내부 디자인 ***********/
+        textarea {
+            height: 200px;
         }
 
-        .reply-content-box {
+        /* 첨부파일 */
+        .file-box {
             margin: 5px;
         }
 
-        .reply-content {
-            margin: 5px;
+        .delete-btn {
+            width: 57px;
+            font-size: 15px;
+        }
+
+        /* 검증 에러 표현 */
+        .field-error {
+            border-color: #dc3545;
+            color: #dc3545;
+
         }
     </style>
 </head>
 <body>
 
-<div class="container">
+<div class="container-fluid">
 
     <div th:replace="~{fragment/header}"></div>
 
@@ -61,10 +60,10 @@
             <div th:replace="~{fragment/sidebar}"></div>
         </div>
 
-        <div class="col-md-9" style="margin-top: 30px;">
+        <div class="col-md-9" >
 
             <div class="board-name-container">
-                <h1>갤러리 게시판 관리</h1>
+                <h3>갤러리 게시판 관리</h3>
             </div>
 
             <form action th:object="${galleryBoardDTO}" th:action method="post" enctype="multipart/form-data">
@@ -78,9 +77,9 @@
                         <th class="bg-gray">분류</th>
                         <td>
                             <select name="categoryName" th:field="*{categoryId}" class="form-control">
-                                <option value="hobby">취미</option>
-                                <option value="humor">유머</option>
-                                <option value="touching">감동</option>
+                                <option value="celebrity">연예인</option>
+                                <option value="memorial">기념</option>
+                                <option value="place">장소</option>
                             </select>
                             <div class="field-error" th:errors="*{categoryId}"/>
                         </td>
@@ -93,18 +92,24 @@
                     </tr>
                     <tr>
                         <th class="bg-gray">내용</th>
-                        <td><textarea name="content" th:field="*{content}" class="form-control"></textarea>
+                        <td><textarea name="content" th:field="*{content}" class="content-form form-control"></textarea>
                             <div class="field-error" th:errors="*{content}"/>
                         </td>
                     </tr>
                     <tr>
                         <th class="bg-gray">첨부파일</th>
                         <td>
+                            <div class="file-container" th:if="${fileList}">
+                                <div class="file-box row" th:each="file : ${fileList}">
+                                    <span class="col-md-1">📁</span>
+                                    ︎ <div class="attachment-box col-md-9" th:text="${file.originName}"></div>
+                                    <button type="button" class="delete-btn btn btn-outline-dark col-md-1" th:text="삭제"></button>
+                                </div>
+                            </div>
                             <div id="attachFileDiv">
                                 <input type="file" name="addFiles">
-                                <input type="button" value="추가" onclick="">
                             </div>
-                            <div class="field-error" th:errors="*{addFiles}"/>
+                            <input type="button" value="추가" onclick="add_file_box()">
                         </td>
                     </tr>
                     </tbody>
@@ -112,8 +117,14 @@
 
                 <input type="submit"
                        class="btn btn-primary pull-right"
+                       th:if="${galleryBoardDTO.seq == 0}"
+                       th:onclick="|location.href='@{/admin/gallery}'|"
+                       value="등록">
+                <input type="submit"
+                       class="btn btn-primary pull-right"
+                       th:unless="${galleryBoardDTO.seq == 0}"
                        th:onclick="|location.href='@{/admin/gallery/{seq}(seq=${galleryBoardDTO.seq})}'|"
-                       value="등록/수정">
+                       value="수정">
                 <button
                         type="button"
                         class="btn btn-primary pull-right"

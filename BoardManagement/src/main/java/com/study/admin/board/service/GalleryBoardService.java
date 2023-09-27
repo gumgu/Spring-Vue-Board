@@ -128,7 +128,7 @@ public class GalleryBoardService {
      * @param seq 삭제할 seq
      */
     public void deleteBoard(int seq) {
-        galleryBoardRepository.deleteBoard(seq);
-    }
+        fileRepository.deleteFileByBoardSeq(seq);
+        galleryBoardRepository.deleteBoard(seq);    }
 
 }

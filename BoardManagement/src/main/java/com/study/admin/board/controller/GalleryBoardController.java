@@ -1,8 +1,8 @@
 package com.study.admin.board.controller;
 
-
 import com.study.admin.dto.*;
 import com.study.admin.board.service.GalleryBoardService;
+import com.study.admin.entity.UpdateCheck;
 import com.study.admin.enums.SessionConst;
 import com.study.admin.file.service.FileService;
 import lombok.RequiredArgsConstructor;
@@ -75,6 +75,25 @@ public class GalleryBoardController {
     }
 
     /**
+     * 주어진 seq와 일치하는 갤러리게시글 조회하고, 수정 폼을 제공합니다.
+     *
+     * @param seq
+     * @return
+     */
+    @GetMapping("/gallery/{seq}")
+    public String modifyForm(@PathVariable int seq, Model model) {
+
+        GalleryBoardDTO galleryBoardDTO = galleryBoardService.findBoardBySeq(seq);
+
+        List<FileDTO> fileList = fileService.findFileByBoardSeq(seq);
+
+        model.addAttribute("fileList", fileList);
+        model.addAttribute("galleryBoardDTO", galleryBoardDTO);
+
+        return "board/galleryForm";
+    }
+
+    /**
      * 전달받은 갤러리 게시글 등록합니다.
      * - 게시글 등록 조건을 만족하지 않는 경우, 작성 페이지로 되돌아갑니다.
      *
@@ -82,11 +101,11 @@ public class GalleryBoardController {
      * @return
      */
     @PostMapping("/gallery")
-    public String add(@Validated @ModelAttribute GalleryBoardDTO galleryBoardDTO,
-                      BindingResult bindingResult,
-                      HttpServletRequest request) throws IOException {
+    public String add(@Validated @ModelAttribute("galleryBoardDTO") GalleryBoardDTO galleryBoardDTO,
+                      BindingResult bindingResult, HttpServletRequest request) throws IOException {
 
         log.info("저장할 galleryBoardDTO={}", galleryBoardDTO);
+        log.info("저장할 Board={}", galleryBoardDTO.toBoardString());
 
         // binding 실패 시, 다시 작성 폼을 제공합니다.
         if (bindingResult.hasErrors()) {
@@ -98,6 +117,11 @@ public class GalleryBoardController {
         HttpSession session = request.getSession();
         AdminDTO adminDTO = (AdminDTO) session.getAttribute(SessionConst.LOGIN_ADMIN);
 
+        if (adminDTO == null) {
+            String redirectURL = "/admin/gallery";
+            return "redirect:/admin/login?redirectURL=" + redirectURL;
+        }
+
         galleryBoardDTO.setAdminId(adminDTO.getId());
 
         log.debug("galleryBoardDTO={}", galleryBoardDTO.toString());
@@ -106,21 +130,7 @@ public class GalleryBoardController {
         return "redirect:/admin/gallery/" + savedGallery.getSeq();
     }
 
-    /**
-     * 주어진 seq와 일치하는 갤러리게시글 조회하고, 수정 폼을 제공합니다.
-     *
-     * @param seq
-     * @return
-     */
-    @GetMapping("/gallery/{seq}")
-    public String modifyForm(@PathVariable int seq, Model model) {
 
-        GalleryBoardDTO galleryBoardDTO = galleryBoardService.findBoardBySeq(seq);
-
-        model.addAttribute("galleryBoardDTO", galleryBoardDTO);
-
-        return "board/galleryForm";
-    }
 
     /**
      * 갤러리 게시글을 수정합니다.
@@ -129,16 +139,26 @@ public class GalleryBoardController {
      * @return
      */
     @PostMapping("/gallery/{seq}")
-    public String modify(@ModelAttribute GalleryBoardDTO galleryBoardDTO,
-                         HttpServletRequest request) {
+    public String modify(@Validated(UpdateCheck.class) @ModelAttribute GalleryBoardDTO galleryBoardDTO,
+                         BindingResult bindingResult, HttpServletRequest request) {
 
         log.info("수정할 gallery = {}", galleryBoardDTO);
+
+        // binding 실패 시, 다시 작성 폼을 제공합니다.
+        if (bindingResult.hasErrors()) {
+            log.debug("error={}", bindingResult);
+            return "board/freeForm";
+        }
 
         // 세션의 관리자 id를 DTO에 담습니다.
         HttpSession session = request.getSession();
         AdminDTO adminDTO = (AdminDTO) session.getAttribute(SessionConst.LOGIN_ADMIN);
 
-        log.info("adminDTO = {}", adminDTO);
+        if (adminDTO == null) {
+            String redirectURL = "/admin/gallery";
+            return "redirect:/admin/login?redirectURL=" + redirectURL;
+        }
+
         galleryBoardDTO.setAdminId(adminDTO.getId());
 
         galleryBoardService.modifyBoard(galleryBoardDTO);

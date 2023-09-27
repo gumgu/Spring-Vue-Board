@@ -106,6 +106,7 @@ public class FreeBoardService {
 
         freeBoardRepository.saveBoard(freeBoardDTO);
 
+        log.info("freeBoardDTO.getAddFiles() = {}", freeBoardDTO.getAddFiles());
         if (!ParamUtil.isNull(freeBoardDTO.getAddFiles())) {
 
             for(MultipartFile file :  freeBoardDTO.getAddFiles()) {
